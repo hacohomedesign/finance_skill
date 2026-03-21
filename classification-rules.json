@@ -1,0 +1,127 @@
+[
+  {
+    "priority": 10,
+    "matchType": "containsAny",
+    "pattern": ["grab"],
+    "directionHint": "expense",
+    "category": "Di chuyển",
+    "subcategory": "Grab",
+    "transactionTypeFinal": "expense_transport",
+    "merchantHint": "Grab",
+    "confidenceBase": 0.95,
+    "active": true
+  },
+  {
+    "priority": 10,
+    "matchType": "containsAny",
+    "pattern": ["be app", "be viet", "be taxi", "thanh toan be"],
+    "directionHint": "expense",
+    "category": "Di chuyển",
+    "subcategory": "Be",
+    "transactionTypeFinal": "expense_transport",
+    "merchantHint": "Be",
+    "confidenceBase": 0.90,
+    "active": true
+  },
+  {
+    "priority": 10,
+    "matchType": "containsAny",
+    "pattern": ["highlands", "highland coffee"],
+    "directionHint": "expense",
+    "category": "Ăn uống",
+    "subcategory": "Cafe",
+    "transactionTypeFinal": "expense_food",
+    "merchantHint": "Highlands Coffee",
+    "confidenceBase": 0.95,
+    "active": true
+  },
+  {
+    "priority": 10,
+    "matchType": "containsAny",
+    "pattern": ["phuc long"],
+    "directionHint": "expense",
+    "category": "Ăn uống",
+    "subcategory": "Cafe",
+    "transactionTypeFinal": "expense_food",
+    "merchantHint": "Phúc Long",
+    "confidenceBase": 0.95,
+    "active": true
+  },
+  {
+    "priority": 10,
+    "matchType": "containsAny",
+    "pattern": ["shopee", "lazada", "tiki", "sendo"],
+    "directionHint": "expense",
+    "category": "Mua sắm",
+    "subcategory": "Online",
+    "transactionTypeFinal": "expense_shopping",
+    "confidenceBase": 0.90,
+    "active": true
+  },
+  {
+    "priority": 10,
+    "matchType": "containsAny",
+    "pattern": ["hoc phi", "hoc vien", "truong", "dai hoc"],
+    "directionHint": "expense",
+    "category": "Học tập",
+    "subcategory": "Học phí",
+    "transactionTypeFinal": "expense_education",
+    "confidenceBase": 0.90,
+    "active": true
+  },
+  {
+    "priority": 9,
+    "matchType": "containsAny",
+    "pattern": ["hoan tien", "refund", "tra lai"],
+    "directionHint": "income",
+    "category": "Hoàn tiền",
+    "subcategory": "Refund",
+    "transactionTypeFinal": "refund",
+    "confidenceBase": 0.92,
+    "active": true
+  },
+  {
+    "priority": 9,
+    "matchType": "containsAny",
+    "pattern": ["luong", "salary", "thu nhap", "tien cong"],
+    "directionHint": "income",
+    "category": "Thu nhập",
+    "subcategory": "Lương",
+    "transactionTypeFinal": "income_salary",
+    "confidenceBase": 0.90,
+    "active": true
+  },
+  {
+    "priority": 8,
+    "matchType": "containsAny",
+    "pattern": ["chuyen khoan", "ck den", "nhan tien", "transfer"],
+    "directionHint": "income",
+    "category": "Thu nhập",
+    "subcategory": "Chuyển khoản vào",
+    "transactionTypeFinal": "income_transfer_in",
+    "confidenceBase": 0.70,
+    "active": true
+  },
+  {
+    "priority": 7,
+    "matchType": "containsAny",
+    "pattern": ["dien nuoc", "hoa don", "internet", "viettel", "mobifone", "vnpt", "fpt"],
+    "directionHint": "expense",
+    "category": "Hóa đơn",
+    "subcategory": "Tiện ích",
+    "transactionTypeFinal": "expense_utilities",
+    "confidenceBase": 0.88,
+    "active": true
+  },
+  {
+    "priority": 7,
+    "matchType": "containsAny",
+    "pattern": ["an uong", "com", "bun", "pho", "pizza", "kfc", "mcdo", "lotteria"],
+    "directionHint": "expense",
+    "category": "Ăn uống",
+    "subcategory": "Nhà hàng",
+    "transactionTypeFinal": "expense_food",
+    "confidenceBase": 0.80,
+    "active": true
+  }
+]

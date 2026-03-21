@@ -1,0 +1,29 @@
+{
+  "timezone": "Asia/Ho_Chi_Minh",
+  "sheet": {
+    "spreadsheetId": "YOUR_GOOGLE_SPREADSHEET_ID"
+  },
+  "sepay": {
+    "baseUrl": "https://my.sepay.vn/userapi",
+    "listEndpoint": "/transactions/list",
+    "limitPerFetch": 20
+  },
+  "telegram": {
+    "botToken": "",
+    "chatId": ""
+  },
+  "appsScript": {
+    "url": "YOUR_APPS_SCRIPT_WEB_APP_URL",
+    "secret": ""
+  },
+  "sync": {
+    "intervalMinutes": 5
+  },
+  "report": {
+    "daily": "21:30",
+    "monthly": "21:00"
+  },
+  "anomaly": {
+    "largeAmountThreshold": 5000000
+  }
+}

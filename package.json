@@ -1,0 +1,13 @@
+{
+  "name": "sepay-openclaw-finance",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync": "node sync.js",
+    "watch": "node sync.js --watch",
+    "daily": "node -e \"import('./sync.js').then(m => m.buildDailyReport(process.argv[1]) ).then(console.log)\" --",
+    "monthly": "node -e \"import('./sync.js').then(m => m.buildMonthlyReport(process.argv[1])).then(console.log)\" --",
+    "test-telegram": "node -e \"import('./sync.js').then(m => m.sendTelegram('✅ Test kết nối Telegram thành công!'))\""
+  }
+}

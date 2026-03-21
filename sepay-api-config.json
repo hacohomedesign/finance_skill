@@ -1,0 +1,6 @@
+{
+  "baseUrl": "https://my.sepay.vn/userapi",
+  "tokenEnvVar": "SEPAY_API_TOKEN",
+  "syncIntervalMinutes": 5,
+  "listEndpoint": "/transactions/list"
+}
