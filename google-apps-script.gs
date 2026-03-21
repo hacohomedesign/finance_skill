@@ -15,16 +15,12 @@ const CONFIG = {
 
 const HEADERS = {
   transactions_normalized: [
-    'event_id','transaction_time','day_key','month_key','week_key',
-    'amount','currency','direction','transaction_type_final',
-    'gross_outflow','net_effect','effective_spending',
-    'normalized_description','category','subcategory','merchant',
-    'bank_name','account_alias','balance_after',
-    'confidence_score','needs_review','anomaly_flag','created_at'
+    'Mã GD', 'Thời gian', 'Loại', 'Số tiền', 'Chi tiêu thực', 
+    'Nhóm', 'Chi tiết', 'Nội dung', 'Số dư'
   ],
   monthly_summary: [
-    'month_key','total_income','total_expense_gross','effective_spending',
-    'net_cashflow','transaction_count','top_categories_json','generated_at'
+    'Tháng', 'Tổng thu', 'Tổng chi', 'Chi tiêu thực', 
+    'Dòng tiền', 'Số GD', 'Top nhóm chi', 'Ngày chốt'
   ]
 };
 
@@ -47,18 +43,18 @@ function doPost(e) {
     if (body.kind === 'append_normalized') {
       const sheet = ensureSheet(ss, 'transactions_normalized', HEADERS.transactions_normalized);
       // Dedupe: kiểm tra event_id đã tồn tại chưa
-      const existing = getColumnValues(sheet, 'event_id');
-      if (existing.includes(String(body.payload.event_id))) {
-        return json({ ok: true, duplicate: true, event_id: body.payload.event_id });
+      const existing = getColumnValues(sheet, 'Mã GD');
+      if (existing.includes(String(body.payload['Mã GD']))) {
+        return json({ ok: true, duplicate: true, event_id: body.payload['Mã GD'] });
       }
       appendRow(sheet, HEADERS.transactions_normalized, body.payload);
-      return json({ ok: true, sheet: 'transactions_normalized', event_id: body.payload.event_id });
+      return json({ ok: true, sheet: 'transactions_normalized', event_id: body.payload['Mã GD'] });
     }
 
     if (body.kind === 'upsert_monthly_summary') {
       const sheet = ensureSheet(ss, 'monthly_summary', HEADERS.monthly_summary);
-      upsertRow(sheet, 'month_key', body.payload);
-      return json({ ok: true, sheet: 'monthly_summary', month_key: body.payload.month_key });
+      upsertRow(sheet, 'Tháng', body.payload);
+      return json({ ok: true, sheet: 'monthly_summary', month_key: body.payload['Tháng'] });
     }
 
     return json({ ok: false, error: 'unsupported_kind: ' + body.kind });

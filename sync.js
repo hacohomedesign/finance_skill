@@ -172,9 +172,18 @@ async function postToSheet(kind, payload) {
 }
 
 async function saveToSheet(tx) {
-  // Ghi transactions_normalized
-  const r1 = await postToSheet('append_normalized', tx);
-  return r1;
+  const sheetPayload = {
+    'Mã GD': tx.event_id,
+    'Thời gian': tx.transaction_time,
+    'Loại': tx.direction === 'income' ? 'Thu' : tx.direction === 'expense' ? 'Chi' : 'Nội bộ',
+    'Số tiền': tx.amount,
+    'Chi tiêu thực': tx.effective_spending,
+    'Nhóm': tx.category,
+    'Chi tiết': tx.subcategory,
+    'Nội dung': tx.normalized_description,
+    'Số dư': tx.balance_after
+  };
+  return await postToSheet('append_normalized', sheetPayload);
 }
 
 async function updateMonthlySummarySheet(monthKey) {
@@ -187,14 +196,14 @@ async function updateMonthlySummarySheet(monthKey) {
   ).sort((a, b) => b[1] - a[1]).slice(0, 5);
 
   return postToSheet('upsert_monthly_summary', {
-    month_key: monthKey,
-    total_income: totalIncome,
-    total_expense_gross: totalExpense,
-    effective_spending: effectiveSpending,
-    net_cashflow: totalIncome - totalExpense,
-    transaction_count: rows.length,
-    top_categories_json: JSON.stringify(topCats),
-    generated_at: new Date().toISOString()
+    'Tháng': monthKey,
+    'Tổng thu': totalIncome,
+    'Tổng chi': totalExpense,
+    'Chi tiêu thực': effectiveSpending,
+    'Dòng tiền': totalIncome - totalExpense,
+    'Số GD': rows.length,
+    'Top nhóm chi': JSON.stringify(topCats),
+    'Ngày chốt': new Date().toISOString()
   });
 }
 
