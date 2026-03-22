@@ -1,7 +1,7 @@
 {
   "timezone": "Asia/Ho_Chi_Minh",
   "sheet": {
-    "spreadsheetId": "YOUR_GOOGLE_SPREADSHEET_ID"
+    "spreadsheetId": "1c-Sz4GqC6rk4m7IFB4Q2w1NzsJQEyyYtH2Q6eg5e-NI"
   },
   "sepay": {
     "baseUrl": "https://my.sepay.vn/userapi",
@@ -13,7 +13,7 @@
     "chatId": ""
   },
   "appsScript": {
-    "url": "YOUR_APPS_SCRIPT_WEB_APP_URL",
+    "url": "https://script.google.com/macros/s/AKfycbyX2pE8EEek18SqcCSbY5lBFI5x0HhpQAZsLkw7O3F3kJ-CK0dIO4D4zctsgtyR-nYr/exec",
     "secret": ""
   },
   "sync": {
