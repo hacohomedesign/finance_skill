@@ -86,7 +86,6 @@ function normalize(tx) {
   const rule      = matchRule(text);
   const dayKey    = dayKeyOf(tx.transaction_date);
 
-  // metrics
   let gross_outflow = 0, net_effect = 0, effective_spending = 0;
   if (direction === 'income')  { net_effect = amount; }
   if (direction === 'expense') { gross_outflow = amount; net_effect = -amount; effective_spending = amount; }
@@ -119,11 +118,21 @@ function normalize(tx) {
   };
 }
 
-// ─── SePay API ──────────────────────────────────────────────────────────────
+// ─── SePay API — lấy giao dịch 1 năm gần đây ────────────────────────────────
 async function fetchTransactions() {
   const token = process.env.SEPAY_API_TOKEN;
   if (!token) throw new Error('Thiếu SEPAY_API_TOKEN trong .env');
-  const url = `${cfg.sepay.baseUrl}${cfg.sepay.listEndpoint}?limit=${cfg.sepay.limitPerFetch}`;
+
+  // Tính ngày bắt đầu = hôm nay - 1 năm
+  const fromDate = new Date();
+  fromDate.setFullYear(fromDate.getFullYear() - 1);
+  const from = fromDate.toISOString().slice(0, 10); // định dạng YYYY-MM-DD
+
+  const limit = cfg.sepay.limitPerFetch || 500;
+  const url = `${cfg.sepay.baseUrl}${cfg.sepay.listEndpoint}?limit=${limit}&transaction_date_min=${from}`;
+
+  log('Gọi SePay API', { from, limit, url });
+
   const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
   if (!res.ok) throw new Error(`SePay API lỗi: ${res.status} ${await res.text()}`);
   const json = await res.json();
@@ -278,7 +287,6 @@ async function runScheduler() {
   const today = localDayKey(d);
   const month = today.slice(0, 7);
 
-  // Daily report at 21:30
   if (time === cfg.report.daily && schedulerState.daily !== today) {
     schedulerState.daily = today;
     log('Gửi báo cáo ngày', { day: today });
@@ -287,7 +295,6 @@ async function runScheduler() {
     await updateMonthlySummarySheet(month);
   }
 
-  // Monthly report on last day at 21:00
   const tomorrow = new Date(d); tomorrow.setDate(d.getDate() + 1);
   const isLastDay = tomorrow.getMonth() !== d.getMonth();
   if (isLastDay && time === cfg.report.monthly && schedulerState.monthly !== month) {
@@ -309,12 +316,9 @@ async function sync() {
 
   for (const tx of fresh) {
     const normalized = normalize(tx);
-    // Lưu local
     fs.writeFileSync(path.join(normalizedDir, `${tx.id}.json`), JSON.stringify(normalized, null, 2));
-    // Ghi vào sheet
     const sheetResult = await saveToSheet(normalized);
     log('saved', { id: tx.id, direction: normalized.direction, amount: normalized.amount, sheet: sheetResult?.ok });
-    // Gửi Telegram
     const msg = buildTxMessage(normalized);
     await sendTelegram(msg);
   }
@@ -346,5 +350,4 @@ if (isWatch) {
   main();
 }
 
-// ─── Exports cho dùng thủ công ────────────────────────────────────────────────
 export { buildDailyReport, buildMonthlyReport, sendTelegram, readAllNormalized };
